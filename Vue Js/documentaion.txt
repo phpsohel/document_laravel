@@ -1,0 +1,90 @@
+===================================================================
+//Vue CLI  Install(A command-line interface (CLI) is a text-based user interface (UI) used to run programs, manage computer files and interact with the computer. Command-line interfaces are also called command-line user interfaces, console user interfaces and character user interfaces.)
+===================================================================
+
+# npm install -g @vue/cli
+# vue --version
+# npm update -g @vue/cli
+# vue create ecommerce
+# cd ecommerce
+# npm run serve
+
+//Directory Structure 
+# node_modules (All Packages And dependencies install)
+# src/App.vue (Its a Parent Component of your vue app)
+# src/Main.js (It's the Javascript entry point)
+# .gitignore (It is used when you want to ignore git push)
+# package-lock.json (It's version control package json file)
+# package.json (All dependencies mentioned in  this file)
+# vue.config.js (It's vue clie config file)
+===============
+# main.js 
+===============
+import {createApp} from 'vue';
+createApp(createApp function is used to New Application Instance. We can pass a component an createApp function.)
+mount('#app) (mount() method renders application instance. It expects a"container" argument, which can either be an actual DOM element or selector string. )
+
+================================
+# API Styles (Vue Components can be authored in two different API styles)
+================================
+# option API (We define a components logic using an object of options such as data, methods, and mountend )
+# composition API (With composition API, we define a component's logic using imported API function.) 
+                  (Compostion API is typically used with <script setup>)
+
+================================
+# Language Blocks
+================================
+<template> HTML</template>
+<script> Javascript</script>
+<style> CSS</style>
+
+================================
+# Component Naming Conevtion 
+================================
+We can pascalcase names when registering components.
+Example : <HelloWorld />
+MyComponent
+A components registered as MyComponent can be refernced in the template via both
+<MyComponent> and  <my-component>
+
+================================
+# Text Interpolation (Text interpolation is a form of data binding. We can bind simple property key and Javascript in our 
+                    template using text interpolation.)
+================================
+syntex : {{ property }}
+Example: 
+<h1> {{ msg}}</h1> khantravelsagenc_khantravel
+<h1> {{ num + 10 }}</h1>
+<h1> {{ on?'dark':'light'}}</h1>
+<h1> {{ formDate(date)}}</h1>
+<h1> {{ message.split('').reverse().join()</h1>
+
+================================
+# Attribute Binding (v-bind)
+================================
+const myid = 1;
+<h1 v-bind:id="myid">hi</h1>
+<h1 :id="myid">id 3</h1>
+
+================================
+# Reactivity (Reactivity is a programing paradiagram that allowes us to changes in a declarative manner)
+================================
+reactive 2 type:
+# reactive() (its only works for objects, array, and collection types  such as Map and Set)
+# ref()
+
+
+
+
+
+===================================================================
+//Vue Vite Install
+===================================================================
+
+# npm init vue@latest
+# npm install
+# npm run dev
+# npm run serve
+# 
+# 
+

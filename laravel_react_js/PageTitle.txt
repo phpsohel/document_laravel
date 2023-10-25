@@ -1,0 +1,19 @@
+npm i react-helmet
+
+import React from "react";
+import { Helmet } from "react-helmet";
+
+const BreadCumb = (props) => {
+    return (
+        <>
+            <Helmet>
+                <title>{props.title} | Fashion Club</title>
+            </Helmet>
+            <div class=" mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <p>{props.title}</p>
+            </div>
+        </>
+    );
+};
+export default BreadCumb;

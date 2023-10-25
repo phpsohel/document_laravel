@@ -1,0 +1,34 @@
+==========================================
+Data delete  1-1318 data 
+==========================================
+DELETE FROM `leads` WHERE id BETWEEN 1 AND 13218
+
+==========================================
+
+ek joner data onno jon ke transfer query
+==========================================
+UPDATE `leads` SET `employee_id`= 45 WHERE `employee_id`=7 limit 300;
+
+==========================================
+ek joner data onno jon ke transfer update query
+==========================================
+UPDATE `leads` SET `employee_id`=38 WHERE `employee_id`=37 AND id > 6500;
+
+UPDATE `remainders` SET `employee_id`=38 WHERE `employee_id`=37 AND id > 13500;
+
+
+==========================================
+All Product Qty 0 Hoye jabe
+==========================================
+UPDATE `products` SET `qty`= 0
+
+==============
+Update Query:
+==============
+//0 theke 1 hoye jabe data
+UPDATE `members` SET 'is_active' = 1 WHERE 'is_active' = 0
+
+=============
+Count Query
+============
+SELECT leads.employee_id, COUNT(leads.employee_id) FROM `leads` GROUP BY employee_id;

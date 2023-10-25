@@ -1,0 +1,32 @@
+import logo from './logo.svg';
+import './assets/css/sb-admin-2.css';
+import './assets/css/sb-admin-2.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+import './assets/css/style.css'
+
+import { RouterProvider, useNavigate } from 'react-router-dom';
+import ProjectRouter from './router/ProjectRouter';
+import PublicRouter from './router/PublicRouter';
+import { useState, useEffect } from 'react';
+function App() {
+
+  const [auth, setAuth] = useState(false);
+  useEffect( ()=> {
+    if (localStorage.token != undefined) {
+      setAuth(true)
+    }
+  }, []);
+
+  
+  return (
+    <>
+      {auth ?
+        <RouterProvider router={ProjectRouter} /> :
+        <RouterProvider router={PublicRouter} />
+      }
+    </>
+  );
+}
+
+export default App;

@@ -1,0 +1,23 @@
+//Why jsx map?
+map() method data return kore tai use kora hoy.
+
+
+import React from "react";
+
+function Hellow(props) {
+    var city = ["Dhaka", 'Kolkata','Bangladesh', 'narsindhi'];
+    return (
+        <>
+            <ul>
+                {
+                    city.map((sohel, i)=> {
+                        return <li key={i.toString}>{sohel}</li>
+                    })
+                }
+            </ul>
+        </>
+    )
+
+}
+
+export default Hellow;

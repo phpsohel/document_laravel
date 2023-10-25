@@ -1,0 +1,14 @@
+//what is props ? 
+ props means properties.
+ekta component er data onno component e use korar jonno props use kora hoy.
+        <Hellow name="sohel"/>
+        <Hellow name="khan"/>
+        <Hellow name="mia"/>
+
+function Hellow(props) {
+    return (
+        <>
+            <h1>hellow {props.name}</h1>   </>
+    )
+}
+export default Hellow;

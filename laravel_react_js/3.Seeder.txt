@@ -1,0 +1,23 @@
+php artisan make:seeder UserSeeder
+public function run()
+    {
+        $data =[
+            'name' =>'sohel',
+            'email' =>'admin@gmail.com',
+            'phone' =>'01686247464',
+            'password' => Hash::make('12345678'),
+            
+        ];
+        User::create($data);
+    }
+
+//Declarece Class Name:
+============================
+
+Database\Seeder\DatabaseSeeder:
+public function run()
+    {
+        $this->call([UserSeeder::class]);
+    }
+composer dump-autoload
+php artisan db:seed

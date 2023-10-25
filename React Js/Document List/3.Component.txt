@@ -1,0 +1,31 @@
+What is component?
+navar ekta component.
+
+//two type of component
+
+1. Functional Components
+==========================
+import React from "react";
+
+function Hellow() {
+    return (
+        <>
+            <h1>hellow World</h1>   </>
+    )
+}
+export default Hellow;
+
+2. Class Components
+==========================
+import React, { Component } from 'react';
+class ClassComponent extends Component{
+    render() {
+        return (
+            <div>
+                <h1>ClassCompoent</h1>
+            </div>
+        )
+    }
+       
+}
+export default ClassComponent;

@@ -1,0 +1,180 @@
+//Project Create
+laravel new laravel-vue-inertia
+
+====================================
+*** Server Side inertia Setup ****
+====================================
+composer require inertiajs/inertia-laravel
+
+//view/app.blade.php 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet" />
+    <script src="{{ mix('/js/app.js') }}" defer></script>
+  </head>
+  <body>
+    @inertia
+  </body>
+</html>
+
+//Middleware
+php artisan inertia:middleware
+
+//kernal.php
+'web' => [
+    // ...
+    \App\Http\Middleware\HandleInertiaRequests::class,
+],
+====================================
+*** Client Side Setup ****
+====================================
+//Install the Inertia client-side using NPM with vue 3
+npm install @inertiajs/inertia @inertiajs/inertia-vue3
+
+//install vue 3
+npm install vue@next
+
+//install npm
+npm install
+
+========================
+Initialize App
+========================
+
+// resources/js/app.js
+import { createApp, h } from "vue";
+import { createInertiaApp } from "@inertiajs/inertia-vue3";
+ 
+createInertiaApp({
+    resolve: (name) => require(`./Pages/${name}`),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el);
+    },
+});
+
+
+//webpack.mix.js
+mix.js("resources/js/app.js", "public/js")
+    .vue()
+    .postCss("resources/css/app.css", "public/css", [
+        //
+    ]);
+
+mix.webpackConfig({
+    output: {
+        chunkFilename: "js/[name].js?id=[chunkhash]",
+    },
+});
+
+//app/routes/web.php
+Route::get('/', function () {
+    return Inertia::render('Home', ['test' => 'working']);
+});
+
+Route::get('/about-us', function () {
+    return Inertia::render('About', ['about_us' => 'working']);
+});
+
+====================
+Set Up Front End
+====================
+//create Pages Folder and create Home.vue
+//Home.vue
+<template>
+    <div>
+        <h1>Inertiajs is {{ test }}</h1>
+
+        <Link href="/about-us">Go to about us</Link>
+    </div>
+</template>
+
+<script>
+import { Link } from "@inertiajs/inertia-vue3";
+export default {
+    components: {
+        Link,
+    },
+    props: ["test"],
+};
+</script>
+
+//About.vue
+<template>
+    <div>
+        <h1>inertiajs is {{ about_us }}</h1>
+
+        <Link href="/">Go to Home</Link>
+    </div>
+</template>
+
+<script>
+import { Link } from "@inertiajs/inertia-vue3";
+export default {
+    components: {
+        Link,
+        props: ["about_us"],
+    },
+};
+</script>
+
+npm run dev
+==================
+//Error
+==================
+
+The Mix manifest does not exist. (View: C:\laragon\www\laravel-vue-inertia\resources\views\app.blade.php)
+===================
+//Solve
+===================
+//You need to update your vue-loader
+npm update vue-loader
+
+//install vue loader
+npm i vue-loader
+npm run dev
+
+============================================================================
+
+//Vite Install
+npm i @vitejs/plugin-vue
+
+=====================
+resource/js/app.js
+=====================
+import { createApp, h } from "vue";
+import { createInertiaApp } from "@inertiajs/vue3";
+
+createInertiaApp({
+    resolve: (name) => {
+        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
+        return pages[`./Pages/${name}.vue`];
+    },
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el);
+    },
+});
+
+
+
+=========================================
+laravel ->php.7.4
+=========================================
+//Install Breeze & Setup Inertia Js Vue 3
+composer require laravel/breeze --dev
+
+//Next, run below command
+php artisan breeze:install
+
+//install breeze with vue 3
+php artisan breeze:install vue
+
+//And final install Dependencies
+npm install && npm run dev 
+

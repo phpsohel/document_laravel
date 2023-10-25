@@ -1,0 +1,23 @@
+//create project
+npx create-react-app@latest admin
+
+//Server
+npm start
+
+//Bootstrap install
+npm i bootstrap@5.3.1
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+
+//jquery install
+npm i jquery
+import $ from 'jquery';
+
+//create scss file
+style.scss
+
+//file auto compiled
+npm i node-sass
+
+//Router Create
+npm i react-router-dom

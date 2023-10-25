@@ -1,0 +1,8 @@
+//
+ localStorage.setItem('user-info', JSON.stringify(item));
+
+//User Name Show
+const user = JSON.parse(localStorage.getItem('user-info'));
+    console.log(user)
+
+<NavDropdown title={user.name} id="basic-nav-dropdown">

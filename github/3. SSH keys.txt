@@ -1,0 +1,15 @@
+//open git bash
+ssh-keygen
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+
+
+//click github account
+settings/SSH and GPG keys
+
+//file location
+C:\Users\User\.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2OhIL8dbJJx7BbQDGAqzlLZdtK1+QvAC5sT+/i6bYyQ8cZ4HA/kdVubBI+a9Nq2MamYRF5z18dYyQ4ie3l/IzaC3P3exlmFqN8rXqq0FJ/YQyLbfHrUmDy4ZxNLmOftbraKjAzj14oD/mq1FRsdrlRRGmWkdGHQfi5XX562sLlpp4skGeeNvxiR2Lwj8HqBaCE1oYfziTWCQyZ/0svKbJadJO1s8ojtWTBhWYoWDN3a0yUQJeuAjTzrU4y17OduvQ0n+J9C7MjIbXHiao4cbiSA/5U9LynZrFXB5Ysxg8HWx0vqkWxd2mtQ3YdwAnzFznqxB8OzFFXH+s35Opq91cprMU7zWSSJk16/HWvhLbNzEuKMI7ZAedVIxXHi4RXp0bRU5xLr2964co4jWCBGPTv4Jbhj/W0AbUJSITD68QUHA9/RHLb20I2qeK0Z3iIlr0i19JuxdMM6tb2BlnzAYdMC3KUixksIr/TeXBFOtxFD1k1F4BAp1Ro0BdtcF90LM= User@DESKTOP-8ESMS37
+
+
+ssh -T git@github.com

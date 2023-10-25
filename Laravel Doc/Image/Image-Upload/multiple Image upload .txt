@@ -1,0 +1,65 @@
+ public function update(Request $request, $id)
+    {
+        //return $request->all();
+        $update = TourInfo::findOrFail($id);
+        if ($request->file('passport_1st_part_pic')) {
+            $file = $request->file('passport_1st_part_pic');
+            $picture = "public/images/tourimages/{$update->passport_1st_part_pic}";
+            // return  $picture;
+            if (file_exists($picture)) { // unlink or remove previous image from folder
+                unlink($picture);
+            }
+            $filename = time() . rand(10000, 1000) . '.' . $file->getClientOriginalExtension();
+        } else {
+            $filename = $update->passport_1st_part_pic;
+        }
+        if ($request->file('passport_2nd_part_pic')) {
+            $file2 = $request->file('passport_2nd_part_pic');
+            $picture2 = "public/images/tourimages/{$update->passport_2nd_part_pic}";
+            if (file_exists($picture2)) { // unlink or remove previous image from folder
+                unlink($picture2);
+            }
+            $filename2 = time() . rand(10000, 1000) . '.' . $file2->getClientOriginalExtension();
+        } else {
+            $filename2 = $update->passport_2nd_part_pic;
+        }
+        if ($request->file('corona_certificate_pic')) {
+            $file3 = $request->file('corona_certificate_pic');
+            $picture3 = "public/images/tourimages/{$update->corona_certificate_pic}";
+            if (file_exists($picture3)) { // unlink or remove previous image from folder
+                unlink($picture3);
+            }
+            $filename3 = time() . rand(10000, 1000) . '.' . $file3->getClientOriginalExtension();
+        } else {
+            $filename3 = $update->corona_certificate_pic;
+        }
+        if ($request->file('member_pic')) {
+            $file4 = $request->file('member_pic');
+            $picture4 = "public/images/tourimages/{$update->member_pic}";
+            if (file_exists($picture4)) { // unlink or remove previous image from folder
+                unlink($picture4);
+            }
+            $filename4 = time() . rand(10000, 1000) . '.' . $file4->getClientOriginalExtension();
+        } else {
+            $filename4 = $update->member_pic;
+        }	
+	$update->passport_1st_part_pic = $filename;
+        $update->passport_2nd_part_pic = $filename2;
+        $update->corona_certificate_pic = $filename3;
+        $update->member_pic = $filename4;
+        $update->save();
+
+        if (!empty($file)) {
+            $file->move('public/images/tourimages', $filename);
+        }
+
+        if (!empty($file2)) {
+            $file2->move('public/images/tourimages', $filename2);
+        }
+        if (!empty($file3)) {
+            $file3->move('public/images/tourimages', $filename3);
+        }
+        if (!empty($file4)) {
+            $file4->move('public/images/tourimages', $filename4);
+        }
+});

@@ -1,0 +1,24 @@
+ <div class="form-group">
+        <strong>Customer Picture : <sup class="text-danger">*</sup></strong>
+        <input type="file" class="form-control" name="member_pic" onchange="loadFile4(event)">
+         <div class="">
+       @if(!empty($tour->member_pic))
+         <img src="{{ asset('images/tourimages') }}/{{ $tour->member_pic }}" id="output4" style="width: 60%;height: 150px;">
+
+       @else
+      <img src="{{ asset('images/images.png') }}" id="output4" style="width: 60%;height: 150px;">
+      @endif
+
+</div>
+</div>
+
+<script>
+  var loadFile4 = function(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('output4');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        };
+</script>

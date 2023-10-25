@@ -1,0 +1,24 @@
+//npm install
+//npm install vue@next vue-loader@next
+//npm i @vitejs/plugin-vue
+
+//php artisan make:factory StudentFactory
+//composer require laravel/sanctum
+//php artisan make:request LoginRequest
+//php artisan make:resource AuthRequest
+
+//helper Function add
+app/Helper/Helper.php
+//composer.json file
+"autoload": {
+   "psr-4": {
+       "App\\": "app/",
+       "Database\\Factories\\": "database/factories/",
+       "Database\\Seeders\\": "database/seeders/"
+   },
+   "files": [
+       "app/Helpers.php"
+   ]
+},
+//run 
+composer dump-autoload

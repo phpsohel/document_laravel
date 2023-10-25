@@ -1,0 +1,27 @@
+import React from "react";
+import { createBrowserRouter } from "react-router-dom";
+import Master from "../components/layouts/Master";
+import Dashboard from "../components/modules/Dashboard";
+import Contact from "../components/modules/Contact";
+import NoPage from "../components/modules/NoPage";
+const ProjectRouter = createBrowserRouter([
+    {
+        path: '/',
+        element: <Master/>,
+        children: [
+            {
+                path: '/',
+                element:<Dashboard />
+            },
+            {
+                path: '/contact',
+                element:<Contact />
+            },
+            {
+                path: '*',
+                element: <NoPage />
+            },
+        ]
+    }
+]);
+export default ProjectRouter;

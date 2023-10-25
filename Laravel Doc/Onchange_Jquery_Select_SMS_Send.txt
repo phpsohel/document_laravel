@@ -1,0 +1,296 @@
+<script>
+    $(document).ready(function() {
+    	$('#service_type_id').on('change', function() {
+       	 if (this.value == '8') {
+            $("#others_field").show();
+            $("#year").hide();
+
+        } else {
+            $("#others_field").hide();
+             $("#year").show();
+
+
+        }
+    });
+
+</script> 
+
+==============================
+Controller
+==============================
+
+<?php
+
+namespace App\Http\Controllers\BackEndCon;
+
+use App\Customer;
+use App\CustomerPassport;
+use App\CustomerVisa;
+use App\Group;
+use App\Hajj;
+use App\Http\Controllers\Controller;
+use App\MainHajj;
+use App\PreRegister;
+use App\SendSms;
+use App\Services\SmsSender;
+use App\Student;
+use App\TourInfo;
+use App\Visa;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
+class SmsSenderController extends Controller
+{
+    private $controllerInfo;
+
+    public function __construct()
+    {
+        $this->controllerInfo = (object)array(
+            'title' => 'Send SMS',
+            'actionButtons' => true,
+            'routeNamePrefix' => 'sms-sending-system',
+        );
+    }
+
+
+    public function SmsList()
+    {
+        $data['smslists'] = SendSms::orderBy('id', 'DESC')->get();
+        return view('Admin.sms.index', $data);
+    }
+    public function index()
+    {
+        $controllerInfo = $this->controllerInfo;
+        $groups = Group::all();
+        return view('Admin.sms.form', compact('controllerInfo', 'groups'));
+    }
+    //Helper Function
+    // ====================
+    function SendSmsSetUp($year,$number, $text)
+    {
+        $url = "http://66.45.237.70/api.php";
+        $data = array(
+            'username' => "01619123746",
+            'password' => "sms@123",
+            'year' => "$year",
+            'number' => "$number",
+            'message' => "$text"
+        );
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|", $smsresult);
+        $sendstatus = $p[0];
+    }
+
+    public function send(Request $request)
+    {
+        //return $request->all();
+        $year = $request->year;
+        $text = $request->message;
+        if ($request->service_type_id == 1) {
+            $preregisters = PreRegister::get();
+            foreach ($preregisters as $p => $preregister) {
+                $smsData = new SendSms();
+                $smsData->phone = $preregister->phone;
+                $smsData->year = $preregister->year;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $preregister->phone;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect('sms-sending-system/list')->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 2) {
+            $mainhajis = MainHajj::get();
+            foreach ($mainhajis as $mainhaji) {
+                $smsData = new SendSms();
+                $smsData->year = $mainhaji->year;
+                $smsData->phone = $mainhaji->phone;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $mainhaji->phone;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 3) {
+            $umrahhajjs = Hajj::get();
+            foreach ($umrahhajjs as $umrah) {
+                $smsData = new SendSms();
+                $smsData->year = $umrah->year;
+                $smsData->phone = $umrah->phone;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $umrah->phone;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 4) {
+            $students = Student::where('status', '!=', '4')->get();
+            foreach ($students as $student) {
+                $smsData = new SendSms();
+                $smsData->year = $student->year;
+                $smsData->phone = $student->phone;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $student->phone;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 5) {
+            $tours = TourInfo::get();
+            foreach ($tours as $tour) {
+                $smsData = new SendSms();
+                $smsData->year = $tour->year;
+                $smsData->phone = $tour->moblie;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $tour->moblie;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 6) {
+            $visas = CustomerVisa::get();
+            foreach ($visas as $visa) {
+                $smsData = new SendSms();
+                $smsData->year = $visa->year;
+                $smsData->phone = $visa->phone_number;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $visa->phone_number;
+                $this->SendSmsSetUp($year, $number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 7) {
+            $passports = CustomerPassport::get();
+            foreach ($passports as $passport) {
+                $smsData = new SendSms();
+                $smsData->year = $passport->year;
+                $smsData->phone = $passport->phone_number;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $passport->phone_number;
+                $this->SendSmsSetUp($year,$number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        } elseif ($request->service_type_id == 8) {
+            $exports = $request->all_mobile_no;
+            $mobile_numbers = explode(',', $exports);
+            // return $mobile_numbers;
+            foreach ($mobile_numbers as $mobile_number) {
+                $smsData = new SendSms();
+                $smsData->phone = $mobile_number;
+                $smsData->message = $text;
+                $smsData->save();
+                $number = $mobile_number;
+                $this->SendSmsSetUp($number, $text);
+            }
+            return redirect()->back()->with('success', "Sending SMS Successfully");
+        }
+    }
+    public function store(Request $request)
+    {
+        $smsSender = new SmsSender();
+        $customers = Customer::select('mobile');
+        if (isset($request->year) && $request->service_type_id != 0) {
+            $customers->with(['hajj' => function ($q) use ($request) {
+                $q->where('type', $request->service_type_id);
+            }])->whereHas('hajj', function ($q) use ($request) {
+                $q->where('type', $request->service_type_id);
+            });
+        }
+        if ($request->group) {
+            $customers->where('group_id', $request->group);
+        }
+        $customers = $customers->get();
+        if ($customers->count() > 0) {
+            foreach ($customers as $customer) {
+                $res = $smsSender->sendSMS($customer->mobile, $request->message);
+            }
+        }
+        if ($customers) {
+            Session::flash('success', 'SMS Sent Successfully');
+            return redirect()->route($this->controllerInfo->routeNamePrefix . '.index');
+        } else {
+            Session::flash('error', 'Whoops! Failed to Send SMS');
+            return redirect()->back()->withInput();
+        }
+    }
+    public function removeMulti(Request $request)
+    {
+        $ids = $request->ids;
+        SendSms::whereIn('id', explode(",", $ids))->delete();
+        return response()->json(['status' => true, 'message' => "Sms successfully removed."]);
+    }
+}
+
+<form id="group-form" action="{{ route('sms.send') }}" method="POST" onsubmit="return confirm('Are You Sure ');" class="kt-form kt-form--label-right">
+        <div class="kt-portlet__body">
+            @csrf
+            @if(isset($hotel->id)) @method('PUT') @endif
+            <div class="form-group row">
+                <label for="service_type_id" class="col-2 col-form-label">
+                    Service Type *
+                </label>
+                <div class="col-10">
+                    <select class="form-control kt-selectpicker" name="service_type_id" id="service_type_id">
+                        <option value="">Select a Service</option>
+                        <option value="1" {{ old('service_type_id') == 1 ? 'selected' : '' }}>Pre Haji</option>
+                        <option value="2" {{ old('service_type_id') == 2 ? 'selected' : '' }}>Main Haji</option>
+                        <option value="3" {{ old('service_type_id') == 3 ? 'selected' : '' }}>Umrah Haji</option>
+                        <option value="4" {{ old('service_type_id') == 4 ? 'selected' : '' }}>Student</option>
+                        <option value="5" {{ old('service_type_id') == 5 ? 'selected' : '' }}>Tour And Travels</option>
+                        <option value="6" {{ old('service_type_id') == 6 ? 'selected' : '' }}>Visa Processing</option>
+                        <option value="7" {{ old('service_type_id') == 7 ? 'selected' : '' }}>Passport Processing</option>
+                        <option value="8" {{ old('service_type_id') == 8 ? 'selected' : '' }}>Others</option>
+
+                    </select>
+                </div>
+            </div>
+            @php
+                $year = 2020;
+            @endphp
+            <div class="form-group row" id="year" style="display: none;">
+                <label for="group" class="col-2 col-form-label">
+                    Select Year:
+                </label>
+                <div class="col-10">
+                    <select class="form-control kt-selectpicker">
+                        @for($year; $year < 2050; $year++)
+                            <option value="{{ $year }}">{{ $year ?? '' }}</option>
+                        @endfor
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row" id="others_field" style="display: none;">
+                <label for="group" class="col-2 col-form-label">
+                    Type Your Phone Number:
+                </label>
+                <div class="col-10">
+                    <textarea name="all_mobile_no" id="all_mobile_no" cols="30" rows="10" class="form-control" maxlength="150" placeholder="01686247464,01727383944"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="message" class="col-2 col-form-label">Message *</label>
+                <div class="col-10">
+                    <textarea name="message" id="message" cols="30" rows="10" class="form-control" maxlength="150" placeholder="Maximum 150 Characters"></textarea>
+                </div>
+            </div>
+            <div class="kt-portlet__foot">
+                <div class="kt-form__actions">
+                    <div class="row">
+                        <div class="col-2">
+                        </div>
+                        <div class="col-10">
+                            <a href="{{ route($controllerInfo->routeNamePrefix . '.index') }}" class="btn btn-primary">Cancel</a>
+                            {{--<input type="submit" class="btn btn-primary" value="Save">--}}
+                            <button type="submit" class="btn btn-success">Send</button>
+                            <button type="reset" class="btn btn-secondary">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

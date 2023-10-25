@@ -1,0 +1,23 @@
+//Normal Function
+============================
+function food(n) {
+    return n;
+}
+console.log(food('hellow'));
+
+//Array Function
+============================
+const sohel = (varriable)
+() = function
+=>{} = array
+const sohel =() =>{} =array function
+
+const sohel = (name) => {
+    return name;
+}
+console.log(sohel('array function'))
+=============
+same result (shortcart array)
+=============
+const sohel = name => name;
+console.log(sohel('array function'))

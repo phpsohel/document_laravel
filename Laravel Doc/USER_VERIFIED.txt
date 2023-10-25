@@ -1,0 +1,38 @@
+//.env file
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=minibikri
+DB_USERNAME=root
+DB_PASSWORD=
+USER_VERIFIED=1
+
+//controller  
+public function destroy($id)
+    {
+        if (!env('USER_VERIFIED'))
+        return redirect()->back()->with('not_permitted', 
+ 	'This feature is disable for demo!');
+	
+or
+
+  if (env('USER_VERIFIED'))
+        return redirect()->back()->with('not_permitted', 
+ 	'This feature is disable for demo!');
+        
+	$lims_category_data = Category::findOrFail($id);
+        $lims_category_data->is_active = false;
+        $lims_product_data = Product::where('category_id', $id)->get();
+        foreach ($lims_product_data as $product_data) {
+            $product_data->is_active = false;
+            $product_data->save();
+        }
+        if($lims_category_data->image)
+            unlink('public/images/category/'.$lims_category_data->image);
+        $lims_category_data->save();
+        return redirect('category')->with('not_permitted', 'Category deleted successfully');
+    }
+//Blade file
+@if(session()->has('not_permitted'))
+  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
+@endif

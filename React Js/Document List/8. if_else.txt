@@ -1,0 +1,26 @@
+//Javascript
+{} = Expression /block
+() = Parent Thesis
+()=>{} = Anonymous Array function
+() = Parent Thesis
+import React from "react";
+
+function Hellow(props) {
+    var marks = 90;
+    return (
+        <>
+            {(
+                () => {
+                    if (marks < 80) {
+                        return "small"
+                    } else {
+                        return "big"
+                    }
+                }
+            )()}
+        </>
+    )
+    
+}
+
+export default Hellow;

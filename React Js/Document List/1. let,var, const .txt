@@ -1,0 +1,38 @@
+var        ->global scope
+let, const ->block scope
+================================
+example: //No Error
+var a = 10;
+var a = 15;
+console.log(a);
+
+function food() {
+    for (var i = 0;  i < 10; i++){
+        console.log(i+ ' ' + "hi"); 
+    }
+    console.log(i)
+     
+}
+food()
+=====================================
+let ->block scope
+example: //error
+function food() {
+    for (let i = 0;  i < 10; i++){
+        console.log(i+ ' ' + "hi"); 
+    }
+    console.log(i)
+     
+}
+food()
+============================
+const ->block scope
+example: //error (const er man always fixed thake ata increment/decrement hoy na) 
+function food() {
+    for (let i = 0;  i < 10; i++){
+        console.log(i+ ' ' + "hi"); 
+    }
+    console.log(i)
+     
+}
+food()

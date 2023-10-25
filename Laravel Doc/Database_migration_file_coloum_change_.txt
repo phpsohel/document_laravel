@@ -1,0 +1,30 @@
+php artisan make:migration alter_products_table
+composer require doctrine/dbal // Package
+//column type change
+public function up()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->text('description')->change();
+        });
+    }
+public function down()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->text('description')->change();
+        });
+  
+  }
+//column kar pore bosbe
+public function up()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->text('description_two')->after('description');
+        });
+    }
+public function down()
+    {
+        Schema::table('products', function (Blueprint $table) {
+            $table->droColumn('description_two');
+        });
+  
+  }

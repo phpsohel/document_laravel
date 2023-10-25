@@ -1,0 +1,11 @@
+function Hellow(props) {
+    var marks = 50;
+    return (
+        <>
+            <p>{marks > 80 ? <h1>Good Result</h1> : <h2>Average Result {marks}</h2>}</p>
+        </>
+    )
+    
+}
+
+export default Hellow;

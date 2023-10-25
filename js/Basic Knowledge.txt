@@ -1,0 +1,28 @@
+========================
+JS -> Two version js 
+========================
+1. ES5 = Old version = var (var function scoped, var parent function er vitore jekono jaigai access kora jai)         
+2. ES6 = New version = let, const (let hocche const braces scope) 
+
+function abcd()
+    {
+       for(var i = 1; i < 15; i++){
+            console.log(i);
+       }
+       for(var a = 1; a < 10; a++){
+            // console.log(a);
+       }
+        console.log(i);
+        
+
+    }
+     abcd();
+
+//console.log();
+code debugg check korar jonno console.log use kora hoy.
+
+//alert();
+Current Window check korar jonno use kora hoy.
+
+//document.write()
+website e body te text show korar jonno use kora hoy.

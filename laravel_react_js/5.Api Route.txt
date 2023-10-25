@@ -1,0 +1,1 @@
+Route::post('login', [AuthController::class, 'index']);

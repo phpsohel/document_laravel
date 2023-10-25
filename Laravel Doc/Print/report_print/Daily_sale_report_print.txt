@@ -1,0 +1,301 @@
+@extends('layout.main') @section('content')
+
+@if(empty($product_name))
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{'No Data exist between this date range!'}}</div>
+@endif
+@if(session()->has('not_permitted'))
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
+@endif
+@php
+$warehouse_info = \App\Warehouse::find($warehouse_id);
+// dd($warehouse_info);
+@endphp
+<style>
+@media print {
+  .hidden-print {
+    display: none !important;
+  }
+}
+</style>
+
+<section class="forms p-4">
+     <div class="container-fluid">
+         <div class="card p-4">
+             <div class="card-header mt-2">
+                 <h3 class="text-center">{{trans('Daily Sales Report')}}</h3>
+             </div>
+             {!! Form::open(['route' => 'daily_sales.report', 'method' => 'post']) !!}
+             <div class="row mb-3">
+                 <div class="col-md-1"></div>
+                 <div class="col-md-4 mt-4">
+                     <div class="form-group">
+                         <label class="d-tc mt-2"><strong>{{trans('file.Choose Your Date')}}</strong> &nbsp;</label>
+                         <div class="d-tc">
+                             <div class="input-group">
+                                 <input class="form-control" type="date" name="start_date" value="{{ $start_date }}" />
+                                 <input class="form-control" type="date" name="end_date" value="{{ $end_date }}" />
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-4 mt-4">
+                     <div class="form-group">
+                         <label class="d-tc mt-2"><strong>{{trans('file.Choose Warehouse')}}</strong> &nbsp;</label>
+                         <div class="d-tc">
+                             <input type="hidden" name="warehouse_id_hidden" value="{{$warehouse_id}}" />
+                             <select id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins">
+                                 <option value="0">{{trans('file.All Warehouse')}}</option>
+                                 @foreach($lims_warehouse_list as $warehouse)
+                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                                 @endforeach
+                             </select>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-2 mt-4" style="margin-left: 60px;">
+                     <label for=""></label>
+                     <div class="form-group">
+                         <button class="btn btn-primary" type="submit">{{trans('file.submit')}}</button>
+                         {{-- <button class="btn btn-success" id="click_print" >Print</button> --}}
+                         <p class="btn btn-success mt-3" id="click_print" style="color: #fff;">Print</p>
+                     </div>
+                 </div>
+             </div>
+             {!! Form::close() !!}
+         </div>
+     </div>
+
+    <div class="container-fluid" id="print_page">
+        <div class="card p-4">
+            <div class="card-header text-center">
+                <img src="{{asset('public/logo')}}/{{$general_setting->site_logo ?? ''}}" width="100">
+                <div class="text-center">{{$general_setting->site_title ?? ''}}</div>
+                <div>{{$general_setting->phone ?? ''}}</div>
+                <div>{{$general_setting->email ?? ''}}</div>
+                <div>({{$general_setting->address ?? ''}})</div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm table-striped text-nowrap text-center" id="empTable">
+                    <thead>
+                        <tr>
+                             <tr>
+                                <th> SL No</th>
+                                 <th>Invoice No</th>
+                                 <th>{{trans('file.Product Name')}}</th>
+                                 <th>{{trans('Code')}}</th>
+                                 <th> {{trans('file.qty')}}</th>
+                                 <th>{{trans('Sale Price')}}</th>
+                                 <th>Discount</th>
+                                 <th>Total Amount</th>
+                                 <th>Vat</th>
+                                 <th>Net Amount</th>
+                             </tr>
+                        </tr>
+                    </thead>
+                    <tbody class="tr_search_wise_data_show" class="tr_user_id_no_wise_user">
+                       @php
+                $order_discount = 0 ;
+                $net_amount = 0;
+                $total_qty = 0;
+                $total_net_price = 0 ;
+                $total_discount = 0 ;
+
+                @endphp
+                @foreach($lims_sale_list as $sale)
+                @php
+                $order_discount +=$sale->order_discount;
+                $product_sales = \App\Product_Sale::where('sale_id',$sale->id)->get();
+
+                @endphp
+                @if(count($product_sales) > 0)
+                @foreach($product_sales as $pro_sale)
+                @php
+                $net_discount = $pro_sale->discount /$pro_sale->qty ;
+                $products = \App\Product::find($pro_sale->product_id);
+                $net_amount +=$pro_sale->total;
+                $total_qty +=$pro_sale->qty;
+                $total_net_price += $net_discount + $pro_sale->net_unit_price;
+                $total_discount += $pro_sale->discount;
+                @endphp
+                         <tr>
+                             <td>{{ ++$i }}</td>
+                             <td>{{$sale->reference_no}}</td>
+                             <td> {{$products->category->name}} {{$products->name}}</td>
+                             <td>{{$products->code}}</td>
+                             <td>{{$pro_sale->qty}}</td>
+                             <td>{{ $net_discount + $pro_sale->net_unit_price}}</td>
+                             <td>{{$pro_sale->discount}}</td>
+                             <td>{{$pro_sale->total}}</td>
+                             <td>0</td>
+                             <td>{{$pro_sale->total}}</td>
+                         </tr>
+                       @endforeach
+                @endif
+                @endforeach
+                    </tbody>
+                    <tfoot>
+                        <th></th>
+                        <th>Total</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{$total_qty}}</th>
+                        <th>{{$total_net_price}}</th>
+                        <th>{{$total_discount}}</th>
+                        <th>{{$net_amount}}</th>
+                        <th>0</th>
+                        <th>{{ $net_amount }}</th>
+                    </tfoot>
+
+                </table>
+                 <table style="width: 50%; float: right">
+                <thead>
+                    <tr>
+                        <th>Invoice Number</th>
+                        <th>Discount Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $total_coupon_discount = 0 ;
+                    @endphp
+                    @foreach($lims_sale_list as $data)
+                    @if($data->coupon_discount != null)
+                    @php
+                    $total_coupon_discount += $data->coupon_discount ;
+                    @endphp
+                    <tr>
+                        <td>{{$data->reference_no}}</td>
+                        <td>{{$data->coupon_discount}}</td>
+                    </tr>
+                    @endif
+                    @endforeach
+                    <tr>
+                        <td>Total Discount</td>
+                        <td>{{$total_coupon_discount}}</td>
+                    </tr>
+                    <tr>
+                        <td> Adjustment Amount</td>
+                        <td>{{$adjust_amount}}</td>
+                    </tr>
+                    <tr>
+                        <td>Net Total Amount</td>
+                        <td>{{ $adjust_amount + $net_amount - $total_coupon_discount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<script src="{{asset('public/js/printThis.js')}}" type="text/javascript"></script>
+
+<script type="text/javascript">
+ $('#click_print').click(function () {
+     $('#print_page').printThis();
+     });
+    $("ul#report").siblings('a').attr('aria-expanded', 'true');
+    $("ul#report").addClass("show");
+    $("ul#report #product-report-menu").addClass("active");
+    $('#warehouse_id').val($('input[name="warehouse_id_hidden"]').val());
+    $('.selectpicker').selectpicker('refresh');
+    $('#report-table').DataTable({
+        "order": []
+        , 'language': {
+            'lengthMenu': '_MENU_ {{trans("file.records per page")}}'
+            , "info": '<small>{{trans("file.Showing")}} _START_ - _END_ (_TOTAL_)</small>'
+            , "search": '{{trans("file.Search")}}'
+            , 'paginate': {
+                'previous': '<i class="dripicons-chevron-left"></i>'
+                , 'next': '<i class="dripicons-chevron-right"></i>'
+            }
+        }
+        , 'columnDefs': [{
+                "orderable": false
+                , 'targets': 0
+            }
+            , {
+                'render': function(data, type, row, meta) {
+                    if (type === 'display') {
+                        data = '<div class="checkbox"><input type="checkbox" class="dt-checkboxes"><label></label></div>';
+                    }
+                    return data;
+                }
+                , 'checkboxes': {
+                    'selectRow': true
+                    , 'selectAllRender': '<div class="checkbox"><input type="checkbox" class="dt-checkboxes"><label></label></div>'
+                }
+                , 'targets': [0]
+            }
+        ]
+        , 'select': {
+            style: 'multi'
+            , selector: 'td:first-child'
+        }
+        , 'lengthMenu': [
+            [10, 25, 50, -1]
+            , [10, 25, 50, "All"]
+        ]
+        , dom: '<"row"lfB>rtip'
+        , buttons: [{
+                extend: 'pdf'
+                , text: '{{trans("file.PDF")}}'
+                , exportOptions: {
+                    columns: ':visible:not(.not-exported)'
+                    , rows: ':visible'
+                }
+                , action: function(e, dt, button, config) {
+                    datatable_sum(dt, true);
+                    $.fn.dataTable.ext.buttons.pdfHtml5.action.call(this, e, dt, button, config);
+                    datatable_sum(dt, false);
+                }
+                , footer: true
+            }
+            , {
+                extend: 'csv'
+                , text: '{{trans("file.CSV")}}'
+                , exportOptions: {
+                    columns: ':visible:not(.not-exported)'
+                    , rows: ':visible'
+                }
+                , action: function(e, dt, button, config) {
+                    datatable_sum(dt, true);
+                    $.fn.dataTable.ext.buttons.csvHtml5.action.call(this, e, dt, button, config);
+                    datatable_sum(dt, false);
+                }
+                , footer: true
+            }
+            , {
+                extend: 'print'
+                , title: ''
+                , messageTop: "<img src='http://celebrations.com.bd/sale/public/logo/celeb.jpg' width='150'><br>Sale Details-Date Wise <br> @if($warehouse_info != null)  {{ $warehouse_info->name }} <br>{{ $warehouse_info->address }}   <br> @endif  From {{$start_date}} To {{$end_date}}"
+                , messageBottom: "<div style='float:right;margin-right:30px;'></div>",
+
+                text: '{{trans("file.Print")}}'
+                , exportOptions: {
+                    columns: ':visible:not(.not-exported)'
+                    , rows: ':visible'
+                }
+                , action: function(e, dt, button, config) {
+                    datatable_sum(dt, true);
+                    $.fn.dataTable.ext.buttons.print.action.call(this, e, dt, button, config);
+                    datatable_sum(dt, false);
+                }
+                , footer: false
+            }
+            , {
+                extend: 'colvis'
+                , text: '{{trans("file.Column visibility")}}'
+                , columns: ':gt(0)'
+            }
+        ]
+        , drawCallback: function() {
+            var api = this.api();
+            datatable_sum(api, false);
+        }
+    });
+
+</script>
+@endsection
+

@@ -1,0 +1,8 @@
+import { NavLink, Outlet } from "react-router-dom";
+import './asset/custom.css';
+
+Link = Only Link
+
+Navlink = Menu te active inactive set korar jonno Navlink Use kora hoy.
+<NavLink className={({ isActive }) => isActive ? 'active':'in-active'} to={'/admin/product/create'}>Product</NavLink>
+ <NavLink className={({ isActive }) => isActive ? 'active' : 'in-active'} >NavLink</NavLink>

@@ -1,0 +1,76 @@
+<script>
+  //Student Added
+        $(document).ready(function() {
+            $('#add_more_button').click(function() {
+                var new_input = `<tr class="student_education_tr_remove">
+                <td>
+                    <input type='text' name='education_level[]' class='form-control' placeholder='Typing Education Level'>
+                </td>
+                <td class="">
+                     <input type="text" name="subject[]" class="form-control" placeholder="Typing Major">
+                </td>
+                <td class="">
+                    <input type="text" name="university[]" class="form-control" placeholder="Typing University Name">
+                </td><td class="">
+                    <input type="text" name="passing_year[]" class="form-control" placeholder="Typing Year">
+                </td>
+                <td class=""><input type="text" name="result[]" class="form-control" placeholder="Typing Result">
+                </td><td> <p class='btn btn-danger ml-2 btn-sm remove_button_delete'>X</button></td>
+                </tr>`;
+                $('#add_form').append(new_input);
+            });
+        });
+        $('.educational_addtbody').on('click', '.remove_button_delete', function() {
+            //console.log('ok');
+            $(this).parent().parent().remove();
+        });
+</script> 
+ <div class="col-xs-12 col-sm-12 col-md-12 pt-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="">Tour Customer Qualification</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Education Level</th>
+                                                    <th>Subject</th>
+                                                    <th>University</th>
+                                                    <th>Passing Year</th>
+                                                    <th>Result</th>
+                                                    <th class=""></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="educational_addtbody" id="add_form">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="education_level[]" class="form-control " placeholder="Typing Education Level">
+                                                    </td>
+                                                    <td class="">
+                                                        <input type="text" name="subject[]" class="form-control" placeholder="Typing Major">
+                                                    </td>
+                                                    <td class="">
+                                                        <input type="text" name="university[]" class="form-control" placeholder="Typing University Name">
+                                                    </td>
+
+                                                    <td class="">
+                                                        <input type="text" name="passing_year[]" class="form-control" placeholder="Typing Year">
+                                                    </td>
+                                                    <td class="">
+                                                        <input type="text" name="result[]" class="form-control" placeholder="Typing Result">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="">
+                                                    <th colspan="6" class="text-right">
+                                                        <a class="btn btn-success btn-xs" id="add_more_button">Add More</a>
+                                                    </th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>

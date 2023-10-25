@@ -1,0 +1,95 @@
+npm install react-router-dom --save
+
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Master from './components/Layouts/Master';
+import Home from './components/Page/Home';
+import About from './components/Page/About';
+import Contact from './components/Page/Contact';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Master />}>
+            <Route path='/' element={<Home/>} />
+            <Route path='/about' element={<About />} />
+            <Route path='/contact' element={<Contact />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+   
+    </>
+  )
+}
+
+export default App;
+
+========================
+or
+========================
+
+//ProjectRouter.js
+===========================
+import React from 'react';
+import { createBrowserRouter, RouterProvider, Route, Link, } from "react-router-dom";
+import Master from '../../components/frontend/layout/Master';
+import Dashboard from '../../components/frontend/partials/Dashboard';
+import About from '../../components/frontend/partials/About';
+import Shop from '../../components/frontend/partials/Shop';
+import Blog from '../../components/frontend/partials/Blog';
+import NoPage from '../../components/frontend/partials/NoPage';
+import Contact from '../../components/frontend/partials/Contact';
+const ProjectRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <Master />,
+        children: [
+            {
+                path: '/',
+                element: <Dashboard />
+            },
+            {
+                path: '/about',
+                element: <About />
+            },
+            {
+                path: '/shop',
+                element: <Shop />
+            },
+            {
+                path: '/blog',
+                element: <Blog />
+            },
+            {
+                path: '/contact',
+                element: <Contact />
+            },
+            {
+                path: '*',
+                element: <NoPage />
+            },
+        ]
+    },
+]);
+export default ProjectRouter;
+
+//App.js
+===========================
+
+
+import './App.css';
+import ProjectRouter from './router/frontend/ProjectRouter';
+import { RouterProvider } from 'react-router-dom';
+
+function App() {
+  return (
+    <div className="App">
+      <RouterProvider router={ProjectRouter} />
+    </div>
+  );
+}
+
+export default App;

@@ -1,0 +1,61 @@
+// =================
+Route
+// =================
+Route::post('/category/store',[CategoryController::class, 'store']);
+
+// =================
+CategoryController.php
+// =================
+public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:categories',
+            // 'image' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
+        ]);
+        $products = Category::create([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            
+        ]);
+        return response()->json($products, 200);
+    }
+// =================
+index.vue
+// =================
+<script setup>
+import axios from "axios";
+import { onMounted, reactive, ref } from "vue";
+import { Form, Field } from 'vee-validate';
+
+// ================
+//Category Show
+// =================
+const categories = ref([]);
+
+const getCategories=() => {
+  axios.get("/api/category/index").then((response) => {
+    categories.value = response.data;
+  });
+};
+onMounted(() => {
+  getCategories();
+});
+// ==================
+//Category Store
+// ==================
+const form = reactive({
+    name: '',
+    slug: '',
+    image: '',
+});
+const createCategory = () => {
+    axios.post('/api/category/store', form)
+        .then((response) => {
+            // getCategories.value.push(response.data);
+            form.name = '';
+            form.slug = '';
+            form.image = '';
+            $('#createCategory').modal('hide');
+
+    });
+}

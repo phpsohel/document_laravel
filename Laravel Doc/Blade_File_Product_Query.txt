@@ -1,0 +1,7 @@
+  @php
+    $cartTotal = App\Models\Cart::where('user_ip', \Request::ip())->count();
+    $carProducts = App\Models\Cart::with('products')->where('user_ip', \Request::ip())->get();
+    $total = App\Models\Cart::get()->where('user_ip', \Request::ip())->sum(function($i){
+      return $i->price * $i->qty;
+     });
+   @endphp

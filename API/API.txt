@@ -1,0 +1,11 @@
+API = APplication Programmable Interface
+============
+Controller:
+============
+php artisan make:controller UserApiController
+
+=========
+Route:
+=========
+web.api
+Route::get('/users/{id?}', [UserApiController::class, 'ShowUser']);

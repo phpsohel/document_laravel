@@ -1,0 +1,23 @@
+ @forelse ($police_clearances as $police_clearance)
+                <tr id="tr-{{ $police_clearance->id }}">
+                    <td scope="row">{{ $police_clearance->students->name ?? '' }}</td>
+                    <td>{{ $police_clearance->issue_date ?? '' }}</td>
+                    <td>
+                        @if(!empty($police_clearance->police_clearance_file))
+                        <a href="{{ url('public/images/student_police_clearance/'.$police_clearance->police_clearance_file) }}" class="" target="_blank">File Download</a>
+                        @else
+                        <b class="text-danger">File Not Found</b>
+                        @endif
+
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ route('student-police-clearance.edit',$police_clearance->id ) }}" class="btn btn-primary btn-sm btn-icon-sm btn-circle">
+                            <i class="flaticon2-edit"></i>
+                        </a>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="12" class="text-center"><b class="text-danger"> Data not found!</b></td>
+                </tr>
+            @endforelse()

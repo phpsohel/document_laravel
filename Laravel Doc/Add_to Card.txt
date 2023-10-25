@@ -1,0 +1,5 @@
+composer require hardevine/shoppingcart
+//create CartController
+
+//product.blade.php
+ <a onclick="addTocart({{ $product->id}})" aria-label="Add To Cart" class="action-btn hover-up" href=""><i class="fi-rs-shopping-bag-add"></i></a>

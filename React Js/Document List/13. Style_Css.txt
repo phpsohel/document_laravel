@@ -1,0 +1,14 @@
+return <div style={{ color: 'blue', lineHeight : 10, padding: 20 }}> Inline Styled Component</div>
+
+
+const myComponentStyle = {
+   color: 'blue',
+   lineHeight: 10,
+   padding: '1.5em',
+}
+
+function MyComponent(){
+
+     return <div style={myComponentStyle}> Inline Styled Component</div>
+
+}

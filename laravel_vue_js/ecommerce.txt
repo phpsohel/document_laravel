@@ -1,0 +1,10 @@
+//project create
+//Auth Scafolding
+composer require laravel/ui
+php artisan ui vue --auth
+//npm run dev
+npm install laravel --mix@latest
+npm install vue-loader
+//php artisan migrate
+//php artisan make:model Product -mfs
+//php artisan migrate:fresh --seed

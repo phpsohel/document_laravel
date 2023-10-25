@@ -1,0 +1,30 @@
+<th>Medical Report Status</th>
+ <th>Visa Issue Data</th>
+<td>
+    @if($student->medical_report_status == 2)
+        <p class="text-danger">{{ $student->medicaltest->medical_report_result == 1 ? 'UnFit':'FIT' }}</p>
+      @else
+      @if($student->medical_status == 2)
+         <a href="#" class="text-info btn-xs detail_data mx-2" data-toggle="modal" data-target="#medical_report_{{ $student->id }}" title="Add Medical Report">Add Medical Report
+                            </a>
+       @else
+        <p class="">Add Medical Report</p>
+       @endif
+
+     @endif
+</td>
+
+                        <td>
+                            @if($student->visa_status == 2)
+                            <p class="text-success">
+                                {{ $student->stVisaInfo->visa_issue_date ?? '' }}
+                            </p>
+                            @else
+                            @if($student->medical_report_status == 2)
+                            <a href="#" class="text-info btn-xs detail_data mx-2" data-toggle="modal" data-target="#visa_status_{{ $student->id }}" title="Add Visa Status">Add Visa Status
+                            </a>
+                            @else
+                            <p class="">Add Visa Status</p>
+                            @endif
+                            @endif
+                        </td>

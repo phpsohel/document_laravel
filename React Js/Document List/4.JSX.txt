@@ -1,0 +1,16 @@
+What is JSX?
+================== 
+JSX stands for JavaScript XML. JSX allows us to write HTML in React. 
+JSX makes it easier to write and add HTML in React.
+
+JSX e direct javascript code likha jai.
+prottek ta tag er ei colsing thakte hobe jsx.
+jsx likhar niyom hocche ekta parent div thakbe. 
+
+Exam:
+<div>
+	<p>{2+2}</p>
+	<p className="name">ghgg</p>
+	<button onClick={sohel}>hi</button>
+
+</div>

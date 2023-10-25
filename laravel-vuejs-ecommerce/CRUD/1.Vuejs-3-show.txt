@@ -1,0 +1,66 @@
+==============
+Route
+==============
+Route::get('/category/index',[CategoryController::class, 'index']);
+
+=======================
+CategoryController.php
+=======================
+
+ public function index()
+    {
+        $categories = Category::latest()->get();
+        return response()->json($categories, 200);
+    }
+==================
+index.vue
+==================
+<script setup>
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+
+const categories = ref([]);
+
+const getCategories = () => {
+    axios.get('/api/category/index')
+        .then(response => {
+            categories.value = response.data
+        });
+}
+onMounted(() => {
+    getCategories();
+});
+</script>
+<table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Name</th>
+                                        <th>Slug</th>
+                                        <th>Photo</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(category, index) in categories" :key="category.id">
+                                        <td>{{ index+1 }}</td>
+                                        <td>{{ category.name }}</td>
+                                        <td>{{ category.slug }}</td>
+                                        <td>{{ category.photo }}</td>
+                                         <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#sms_send" style="color: #7c5cc4"><i class="fa-solid fa-sms"></i> SMS</button>
+
+                                                    <button type="button" class="btn btn-primary dropdown-item" data-toggle="modal" data-target="#edit-user" style="color: #7c5cc4"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+
+
+                                                    <a href="" class="btn btn-primary dropdown-item" style="color: #7c5cc4;"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>

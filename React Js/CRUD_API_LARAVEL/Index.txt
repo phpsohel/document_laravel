@@ -1,0 +1,52 @@
+import React, { useEffect, useState } from "react"
+
+const UsingFetch = () => {
+    const [blogs, setBlogs] = useState([])
+
+    const fetchData = () => {
+        fetch("http://127.0.0.1:8000/api/blogs")
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                setBlogs(data)
+            })
+    }
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    return (
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl</th>
+                        <th>Title</th>
+                        <th>Slug</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {blogs.map((blog,key) => (
+                        <tr key={key}>
+                            <td>{blog.id} </td>
+                            <td>{blog.title}</td>
+                            <td>{blog.slug}</td>
+                            <td>{blog.description}</td>
+                            <td>
+                                <a className="text-success">Edit</a> /  
+                                <a className="text-danger">Delete</a>   
+                            </td>
+                            
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+export default UsingFetch

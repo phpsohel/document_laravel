@@ -1,0 +1,13 @@
+//Single page CRUD And Resource Controller use:
+
+<select name="garment_id" id="" class="form-control">
+     @foreach($garments as $key => $garment)
+        <option value="{{ $garment->id }}" {{ $garment->id == $worker->garment_id ? 'Selected': ''}}>{{ $garment->name ?? '' }}</option>
+     @endforeach
+</select>
+//Database Fixed bank name slected
+<select name="paying_method" class="form-control selectpicker">
+                             <option value="1" {{ old('paying_method', $payment->paying_method) == 'Cash' ? 'selected' : '' }}>Cash</option>
+                             <option value="2" {{ old('paying_method', $payment->paying_method) == 'Mobile Banking' ? 'selected' : '' }}>Mobile Banking</option>
+                             <option value="4" {{ old('paying_method', $payment->paying_method) == 'Cheque' ? 'selected' : '' }}>Cheque/Banking</option>
+ </select>

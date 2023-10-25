@@ -1,0 +1,76 @@
+    public function store(Request $request)
+    {
+        $tour_calling_visa = new TourCallingVisa();
+        $tour_calling_visa->tourinfo_id = $request->tourinfo_id;
+        $tour_calling_visa->issue_date = $request->issue_date;
+        $tour_calling_visa->expired_date = $request->expired_date;
+        if ($request->file('calling_file')) {
+            $file = $request->file('calling_file');
+            $fileName = date('Y-m-d ') . $file->getClientOriginalName();
+            $file->move(('public/images/tour_calling_visa'), $fileName);
+            $tour_calling_visa->calling_file =  $fileName;
+        }
+        $tour_calling_visa->save();
+
+        $tourinfo = TourInfo::where('id', $request->tourinfo_id)->first();
+        $tourinfo->calling_visa_status  = 2;
+        $tourinfo->save();
+
+        if ($tour_calling_visa) {
+            Session::flash('success', 'Tour Calling Visa Insert Successfully');
+            return redirect()->route('tour-info.index');
+        } else {
+            Session::flash(
+                'error',
+                'Whoops! Failed to Tour Calling Visa '
+            );
+            return redirect()->back()->withInput();
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        // return $request->all();
+        $update = TourCallingVisa::findOrFail($id);
+        $filename = '';
+        if ($request->file('calling_file')) {
+            $file = $request->file('calling_file');
+            $picture = "public/images/tour_calling_visa/{$update->calling_file}";
+            // return  $picture;
+            if ($update->calling_file != null) { // unlink or remove previous image from folder
+                unlink($picture);
+            }
+            $filename = time() . rand(10000, 1000) . '.' . $file->getClientOriginalExtension();
+        } else {
+            $filename = $update->calling_file;
+        }
+        if (!empty($filename)) {
+            $update->calling_file = $filename;
+        }
+        $update->tourinfo_id = $request->tourinfo_id;
+        $update->issue_date = $request->issue_date;
+        $update->expired_date = $request->expired_date;
+        $update->calling_file = $filename;
+        $update->save();
+        if (!empty($file)) {
+            $file->move('public/images/tour_calling_visa', $filename);
+        }
+        if ($update) {
+            Session::flash('success', 'Tour Calling Visa  Update Successfully');
+            return redirect()->route('tour-info.index');
+        } else {
+            Session::flash(
+                'error',
+                'Whoops! Failed to Tour Calling Visa'
+            );
+            return redirect()->back()->withInput();
+        }
+    }
+
+//Blade File Image Download Link Show
+@if(!empty($police_clearance->police_clearance_file))
+                    <a href="{{ url('public/images/student_police_clearance/'.$police_clearance->police_clearance_file) }}" class="" target="_blank">File Download</a>
+                    @else
+                    <b class="text-danger">File Not Found</b>
+                    @endif

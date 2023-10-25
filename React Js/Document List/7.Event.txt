@@ -1,0 +1,15 @@
+what is event?
+================
+ekta button e click korle je gotona gote tare event bole.
+function Hellow(props) {
+    var handler = () => {
+        alert('hi')
+    }
+    return (
+        <>
+            <h1>hellow {props.name}</h1>  
+            <button onClick={handler}>Click me</button>
+        </>
+    )
+    
+}

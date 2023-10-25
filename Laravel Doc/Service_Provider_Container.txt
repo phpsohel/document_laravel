@@ -1,0 +1,18 @@
+====================================
+Laravel Service Provider কি?
+====================================
+Laravel framework এ Service Provider, project এর Service গুলা load করে, আর Service Container হল Service কে bind বা register করা । 
+যদি আরো সহজ করে বলি তাহলে Service Provider মুলত brain বা engine আর Service Container হল এর body.
+
+
+
+
+
+
+====================================
+Laravel Service Container কি?
+====================================
+আরো সহজভাবে বলা যায়, Laravel service container এমন একটি Powerful Tool যা আপনাকে লারাভেলের class dependency গুলো পরিচালনা এবং এদের ব্যবহারের অনুমতি প্রদান করে।
+ আর এই সব কিছুই Laravel এ Dependency injection সিস্টেম ব্যবহার করে করা হয়। এটি এমন একটি সুবিধা , যা দিয়ে আপনি class dependency গুলোকে constructor বা কিছু ক্ষেত্রে “setter” method এর মাধ্যমে ক্লাসে “injected” করা হয়। আরো সহজ ভাবে বলা যায়,
+ এটি এমন একটি কন্টেইনার যা ক্লাস গুলো কে তার কাছে hold করতে পারে 
+এবং পরবর্তিতে ক্লাসের অবজেক্ট তৈরিতে আমরা আমাদের প্রয়োজন মতো এদেরকে ব্যবহার করতে পারি।

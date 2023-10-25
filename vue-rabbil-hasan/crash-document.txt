@@ -1,0 +1,15 @@
+project create
+npm init vue@latest
+by default vite configaration auto configure
+
+//what is headless CMS?
+//what is Suffle Editor?
+
+npm install vue-router@4
+src/router folder create
+
+//router/index.js create
+import {createRouter,createWebHashHistory} from 'vue-router'
+
+//App.vue
+import { RouterView } from "vue-router"; 

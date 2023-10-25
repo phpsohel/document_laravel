@@ -1,0 +1,48 @@
+  <form id="restForm" action="{{ route('customer.passportandphone') }}" method="POST">
+ 	<button type="button" class="btn btn-secondary mt-4" onclick="newFunction()">Reset</button>
+</form>
+ <script>
+       function newFunction(){
+       var element = document.getElementById(" form_id ");
+       element.reset()
+       }
+    </script>
+
+============
+or
+============
+<script>
+        $(document).on('click', '.resetclass', function(){
+            //alert('ok')
+            $('.passport').val('');
+            $('.phone').val('');
+        });
+    </script>
+ <form  action="{{ route('customer.passportandphone') }}" method="POST">
+                                @csrf
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="">
+                                            <label class="col-form-label" style="color: #fff">Passport <span class="text-danger">*</span></label>
+                                            <input type="text"  name="passport" value="{{ $passport }}" class="form-control passport" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <div class="">
+                                            <label for="full_name" class="col-form-label" style="color: #fff">Phone <span class="text-danger">*</span></label>
+
+                                            <input type="text" name="phone"  value="{{ $phone }}" class="form-control phone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group " style="margin-top: 4px;">
+                                        <label for=""></label>
+                                        <div class="">
+                                            <button type="submit" class="btn btn-success mt-4">Search</button>
+                                            <button type="button"  class="btn btn-secondary mt-4  resetclass">Reset</button>
+                                        </div>
+                                    </div>
+                            </form>

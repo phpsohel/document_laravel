@@ -1,0 +1,2 @@
+ $clientIP = \Request::ip();
+        return $clientIP;
