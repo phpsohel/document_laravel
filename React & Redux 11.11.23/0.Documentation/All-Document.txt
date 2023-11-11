@@ -1,0 +1,7 @@
+//npm 
+Node Package Module
+
+//Create Vite Project
+npm create vite@latest vite_react_redux
+react
+Javasript
