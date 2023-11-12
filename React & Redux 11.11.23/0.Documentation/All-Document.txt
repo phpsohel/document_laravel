@@ -5,3 +5,17 @@ Node Package Module
 npm create vite@latest vite_react_redux
 react
 Javasript
+
+cd latest vite_react_redux
+npm install
+npm run dev
+
+//Bootstrap Include
+npm install bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//JSX fragment
+    return(
+		<>
+		</>
+	)
