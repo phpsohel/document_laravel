@@ -19,3 +19,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 		<>
 		</>
 	)
+
+//Map Method
+function AllToDo() {
+
+  const items = ['dal', 'ruti', 'chal'];
+  return (
+
+    <>
+      <ul className="list-group">
+        {items.map((item) => (
+          <li key={item.id} className="list-group-item">{item}</li>
+        ))}
+      </ul>
+    </>
+  )
+
+}
+export default AllToDo;
+
+//Condition Rendering
