@@ -1,0 +1,36 @@
+composer create-project laravel/laravel laravelvueblog
+npm install
+npm install vue@next vue-loader@next
+
+//webpack.mix.js
+mix.js('resources/js/app.js', 'public/js')
+    .vue()
+    .postCss('resources/css/app.css', 'public/css', [
+        //
+    ]);
+
+
+
+welcome.php
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    </head>
+    <body class="antialiased">
+       <div id="app">
+            
+       </div>
+       <script src="{{ asset('js/app.js') }}"></script>
+    </body>
+</html>
+
+//project mix and run
+npm run watch
+
+//router install
+npm install vue-router
