@@ -1,0 +1,7 @@
+//Css separte by component
+
+<x-admin-footer-js></x-admin-footer-js>
+
+php artisan make:component adminHeaderCss
+php artisan make:component adminFooterJs
+php artisan make:component adminSideBar

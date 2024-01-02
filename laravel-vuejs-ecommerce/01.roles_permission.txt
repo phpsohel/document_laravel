@@ -1,0 +1,3 @@
+https://developercodez.com/post/1681740217/make-user-roles-by-using-eloquent-method-with-pivot-table-in-laravel-10 
+
+php artisan make:model Role -m
